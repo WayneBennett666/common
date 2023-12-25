@@ -67,7 +67,7 @@ def wait_for_running(api_client, linode_id, linode_name):
 
     return current_status
 
-def rename_linode_instance(instance, new_name, api_client):
+def rename_linode_instance(instance, new_name):
     """
     Rename a Linode instance.
 
