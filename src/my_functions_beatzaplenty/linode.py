@@ -1,23 +1,6 @@
 import time, my_functions_beatzaplenty.general_purpose as general_purpose
 import linode_api4 as linode_api
 
-def remote_update(config,keyfile):
-    if config.get("ssh_port") is None:
-        ssh_port = 22
-    else:
-        ssh_port =  config.get("ssh_port") 
-    if config.get('update_script') is None:
-        update_script = 'updater/remote_updates.py'
-    else:
-        update_script = config.get('update_script')
-    
-    print(f"****************** Updating {config.get('ssh_username')} *******************")
-    ssh = general_purpose.create_ssh_connection(config.get('ssh_hostname'), 
-                        config.get('ssh_username'),
-                        keyfile,
-                        port=ssh_port)
-    general_purpose.execute_ssh_command(ssh, command=f"python3 {update_script}")
-
 def wait_for_completion(polling_thread):
     print(f"waiting for completion")   
     polling_thread.start()

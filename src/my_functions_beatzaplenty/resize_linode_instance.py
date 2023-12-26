@@ -75,4 +75,4 @@ def main(api_key,linode_name,small_type,big_type,arg_direction=None,arg_monitor=
 
 if __name__ == "__main__":
     
-    main()
+    main(api_key=None,linode_name=None,small_type=None,big_type=None,arg_direction=None,arg_monitor=False)
