@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import general
+import my_functions_beatzaplenty.general_purpose as general_purpose
 
 def usage():
     print("Usage: {} [-p project name. default is app] and [-q quiet mode optional list compose services to recreate]".format(__file__))
@@ -12,10 +12,10 @@ def main(services):
             path = f"/docker/{service}/docker-compose.yml"
             pull_command = ["docker-compose", "--file", path, "pull"]
             up_command = ["docker-compose", "--file", path, "up", "-d"]
-            if not general.run_command(pull_command):
+            if not general_purpose.run_command(pull_command):
                 continue
             
-            if not general.run_command(up_command):
+            if not general_purpose.run_command(up_command):
                 continue
                 
         except Exception as e:
