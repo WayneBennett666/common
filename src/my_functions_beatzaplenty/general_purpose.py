@@ -157,7 +157,8 @@ def run_updates(containers):
 
     update_commands = [('sudo','apt-get','update'),
                         ('sudo','apt-get','upgrade','-y'),
-                        ('sudo','apt-get','autoremove','-y')]
+                        ('sudo','apt-get','autoremove','-y'),
+                        ('pip-review','--local','--auto','-C')]
                 # Add flatpaks and spices if mint
     if os_release_id == "linuxmint":
         update_commands+=[('flatpak','update'),
