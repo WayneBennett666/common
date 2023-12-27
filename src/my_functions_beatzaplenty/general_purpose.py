@@ -135,13 +135,13 @@ def execute_ssh_command(ssh, command):
 def parse_tuple(input):
     return tuple(k.strip() for k in input[1:-1].split(','))
 
-def remote_update(config,keyfile):
+def remote_update(config,keyfile,containers):
     if config.get("ssh_port") is None:
         ssh_port = 22
     else:
         ssh_port =  config.get("ssh_port") 
     if config.get('update_script') is None:
-        update_script = f".local/lib/python3.10/site-packages/my_functions_beatzaplenty/remote_update.py {config.get('containers')}"
+        update_script = f".local/lib/python3.10/site-packages/my_functions_beatzaplenty/remote_update.py {containers}"
     else:
         update_script = config.get('update_script')
     
