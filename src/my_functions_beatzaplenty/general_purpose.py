@@ -160,7 +160,7 @@ def run_updates(containers):
                         ('sudo','apt-get','autoremove','-y')]
                 # Add flatpaks and spices if mint
     if os_release_id == "linuxmint":
-        update_commands+=[('flatpak','update'),
+        update_commands+=[('flatpak','update','-y'),
                         ('flatpak','remove','--unused'),
                         ('cinnamon-spice-updater','--update-all')]
     try:
