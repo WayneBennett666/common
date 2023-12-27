@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import my_functions_beatzaplenty.general_purpose as general_purpose
+import general_purpose as general_purpose
 
 def usage():
     print("Usage: {} [-p project name. default is app] and [-q quiet mode optional list compose services to recreate]".format(__file__))

@@ -1,6 +1,6 @@
 import subprocess, configparser, os, importlib, shlex, time, platform
 import paramiko as mod_ssh
-import update_containers as update_containers
+
 
 def run_command(command):
     try:
@@ -170,3 +170,18 @@ def run_updates(containers):
             update_containers.main(containers)
     except Exception as e:
         print("Error: {}".format(e))
+
+def update_containers(services):
+    for service in services:
+        try:
+            path = f"/docker/{service}/docker-compose.yml"
+            pull_command = ["docker-compose", "--file", path, "pull"]
+            up_command = ["docker-compose", "--file", path, "up", "-d"]
+            if not run_command(pull_command):
+                continue
+            
+            if not run_command(up_command):
+                continue
+                
+        except Exception as e:
+            print("Error: {}".format(e))
