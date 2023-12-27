@@ -141,7 +141,7 @@ def remote_update(config,keyfile):
     else:
         ssh_port =  config.get("ssh_port") 
     if config.get('update_script') is None:
-        update_script = f'.local/lib/python3.10/site-packages/my_functions_beatzaplenty/remote_update.py {config.get('containers')}'
+        update_script = f".local/lib/python3.10/site-packages/my_functions_beatzaplenty/remote_update.py {config.get('containers')}"
     else:
         update_script = config.get('update_script')
     
