@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "my_functions_beatzaplenty"
-version = "0.2.15"
+version = "0.2.16"
 authors = [
   { name="Wayne Bennett", email="wayne.bennett@live.com" },
 ]
