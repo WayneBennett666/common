@@ -1,5 +1,6 @@
-import subprocess, configparser, os, importlib, shlex, time
+import subprocess, configparser, os, importlib, shlex, time, platform
 import paramiko as mod_ssh
+import update_containers as update_containers
 
 def run_command(command):
     try:
@@ -150,3 +151,22 @@ def remote_update(config,keyfile,deb_commands,mint_commands,containers):
                         keyfile,
                         port=ssh_port)
     execute_ssh_command(ssh, command=f"python3 {update_script}")
+
+def run_updates(containers):
+    os_release_id = platform.freedesktop_os_release().get('ID')
+
+    update_commands = [('sudo','apt-get','update'),
+                        ('sudo','apt-get','upgrade','-y'),
+                        ('sudo','apt-get','autoremove','-y')]
+                # Add flatpaks and spices if mint
+    if os_release_id == "linuxmint":
+        update_commands+=[('flatpak','update'),
+                        ('flatpak','remove','--unused'),
+                        ('cinnamon-spice-updater','--update-all')]
+    try:
+        for cmd in update_commands:
+            run_command(cmd)
+        if check_command_exists("docker"):
+            update_containers.main(containers)
+    except Exception as e:
+        print("Error: {}".format(e))
