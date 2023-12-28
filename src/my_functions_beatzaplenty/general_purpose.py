@@ -1,7 +1,6 @@
 import subprocess, configparser, os, importlib, shlex, time, platform
 import paramiko as mod_ssh
 
-
 def run_command(command):
     '''
     Run any command and output to console
@@ -28,9 +27,13 @@ def run_command(command):
         
         return True
     
-    except Exception as e:
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
         print("Error: {}".format(e))
         return False
+    
+    except Exception as e:
+        print("Error: {}".format(e))
+        raise
 
 def create_config_file(config_data, file_path):
     '''
