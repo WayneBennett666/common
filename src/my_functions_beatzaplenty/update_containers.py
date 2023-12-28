@@ -3,6 +3,11 @@
 import general_purpose as general_purpose
 
 def main(services):
+    """
+    Update Docker Containers.
+
+    :param services: An array of service names to be updated
+    """
     for service in services:
         try:
             path = f"/docker/{service}/docker-compose.yml"

@@ -3,7 +3,15 @@ import linode_api4 as linode_api
 import my_functions_beatzaplenty.linode as linode
 
 def main(config=None,arg_direction=None,arg_monitor=False):
- 
+    """
+    Resize Linode Instance.
+
+    :param config: A configparser object containing the following config items:
+                    api_key: api key for linde authentication
+                    linode_name: Linode instance name to target
+    :param arg_direction: must be "--up" or "--down"
+    :param arg_monitor: Bool to monitor and wait for completion.
+    """
     ################## Linode Data Aquisition ###########################
     try:
         api_client = linode_api.LinodeClient(config.get('api_key'))

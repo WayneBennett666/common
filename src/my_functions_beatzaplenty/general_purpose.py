@@ -3,6 +3,12 @@ import paramiko as mod_ssh
 
 
 def run_command(command):
+    '''
+    Run any command and output to console
+
+    :param command: A string. Command to run.
+    :return: Bool for succesful execution
+    '''
     try:
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
@@ -27,6 +33,11 @@ def run_command(command):
         return False
 
 def create_config_file(config_data, file_path):
+    '''
+    Create a config file
+    param: config_data: the data to use in the file
+    param: file_path: Where to put the file
+    '''
     config = configparser.ConfigParser()
 
     for section, settings in config_data.items():
@@ -40,6 +51,10 @@ def create_config_file(config_data, file_path):
         print(f"Error: {e}")
 
 def is_repo_up_to_date(path):
+    '''
+    Check if your Git Hub repo is up to date
+    :param path: THe path to check
+    '''
     try:
         cwd = os.getcwd()
         os.chdir(path)
@@ -59,6 +74,11 @@ def is_repo_up_to_date(path):
         print(f"Error: {e}")
 
 def install_required_modules(requirements):
+    '''
+    Install required python modules
+    
+    :param requirements: The requirements.txt to use
+    '''
     with open(requirements) as f:
         required_modules = f.read().splitlines()
 
@@ -73,6 +93,12 @@ def install_required_modules(requirements):
             print(f"Module {name} is already installed.")
 
 def check_command_exists(command):
+    '''
+    Check if a command exists
+    :param command: The command to test
+    
+    :return: Bool indicating if the command exists
+    '''
     try:
         subprocess.run(shlex.split(command), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         return True
@@ -80,6 +106,18 @@ def check_command_exists(command):
         return False
 
 def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_interval=5, port=22):
+    '''
+    Create an SSH connection
+    
+    :param hostname: the hostname to connect to
+    :param username: the username to connect as
+    :param keyfile: the keyfile to use int he conneciton attempt
+    :param max_retries: default is 10
+    :param retry_interval: Specified in seconds. Default is 5 seconds.
+    :param port: Port to connect to. Default is 22
+    
+    :return: A paramiko.SSHClient object that can be used to execute commands
+    '''
     retries = 0
     while retries < max_retries:
         try:
@@ -103,6 +141,12 @@ def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_int
     raise RuntimeError(f"Failed to create SSH connection after {max_retries} attempts.")
 
 def execute_ssh_command(ssh, command):
+    '''
+    Execute a command via SSH and output to console
+    
+    :param ssh: A paramiko.SSHClient object create using the general_purpose.create_ssh_connection function
+    :param command: The command to run
+    '''
     try:
         channel = ssh.get_transport().open_session()
         channel.get_pty()
@@ -133,9 +177,23 @@ def execute_ssh_command(ssh, command):
         ssh.close()
 
 def parse_tuple(input):
+    '''
+    Parse a Tuple from a CSV list
+    
+    :param input: The input to Parse
+    
+    :return: A Tuple
+    '''
     return tuple(k.strip() for k in input[1:-1].split(','))
 
 def remote_update(config,keyfile,containers):
+    '''
+    Run Updates on remote machin
+    
+    :param config: A configparser config section
+    :param keyfile: the keyfile to use int he connection attempt
+    :param containers: Docker containers to be updated
+    '''
     if config.get("ssh_port") is None:
         ssh_port = 22
     else:
@@ -153,6 +211,11 @@ def remote_update(config,keyfile,containers):
     execute_ssh_command(ssh, command=f"python3 {update_script}")
 
 def run_updates(containers):
+    '''
+    Run updates on machine. Runs all apt, flatpak and spice updates and updates given containers
+    
+    :param containers: the containers to update
+    '''
     os_release_id = platform.freedesktop_os_release().get('ID')
 
     update_commands = [('sudo','apt-get','update'),
@@ -172,6 +235,11 @@ def run_updates(containers):
         print("Error: {}".format(e))
 
 def update_containers(services):
+    '''
+    Updates Docker Containers
+    
+    :param services: The Docker services to update
+    '''
     for service in services:
         try:
             path = f"/docker/{service}/docker-compose.yml"

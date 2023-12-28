@@ -2,6 +2,11 @@ import time
 import linode_api4 as linode_api
 
 def wait_for_completion(polling_thread):
+    """
+    Wait for Linode Event to complete
+
+    :param polling_thread: A threading.thread object created from a linode_api4.polling object
+    """
     print(f"waiting for completion")   
     polling_thread.start()
     start_time = time.time()
@@ -16,6 +21,13 @@ def wait_for_completion(polling_thread):
     print("Operation Complete")
 
 def get_type_label(api_client, id):
+    """
+    Get Linode Plan label by ID
+
+    :param api_client: A linode_api4.client object to use as the connection
+    :param id: the ID of the plan to query for.
+    :return: Returns the plan's label
+    """
     try:
         all_types = api_client.linode.types()
         type_mapping = {type.id: type.label for type in all_types}
@@ -192,6 +204,11 @@ def get_stackscript_id_by_label_and_username(api_client, stackscript_label, stac
         return None
     
 def detach_all_volumes(instance):
+    """
+    Detach all persistent volumes from Linode Instance
+
+    :param instance: A linode_api4.instance object representing the linode instance to detach all volumes from
+    """
     # Get a list of attached volumes
     attached_volumes = instance.volumes()
 
@@ -205,7 +222,13 @@ def detach_all_volumes(instance):
         print(f"Volume {volume.id} detached from Linode instance {instance.id}.")
 
 def attach_volume(api_client, volume_label, instance):
+    """
+    Attach Persistent volume to Linode Instance
 
+    :param api_client: A linode_api4.client object to connect to Linode
+    :param volume_label: Label of the target volume
+    :param instance: A linode_api4.instance object representing the linode instance to attach the volume to
+    """
     # Find the volume by label
     volumes = api_client.volumes()
     for volume in volumes:
@@ -221,6 +244,15 @@ def attach_volume(api_client, volume_label, instance):
     print(f"Volume '{volume_label}' attached to Linode instance {instance.id}.")
 
 def wait_for_instance_state(api_client, linode_id, linode_name, required_state='running'):
+    """
+    Wait for Linode instance state
+
+    :param api_client: the linode_api4.client object to connect with
+    :param linode_id: the ID of the target linode instance
+    :parm linode_name: the Label of the target linode instance
+    :parm required_state: Default is running
+    :return: THe current status of the instance
+    """
     while True:
         try:
             linodes = api_client.linode.instances(linode_api.Instance.label == linode_name)
@@ -247,6 +279,13 @@ def wait_for_instance_state(api_client, linode_id, linode_name, required_state='
     return current_status
 
 def swap_ipv4_addresses(api_client, instance1, instance2):
+    """
+    Swap IPv4 address between linode instances
+
+    :param api_client: A linode_api4.client object to use as connection to linode
+    :param instance1: A linode_api4.instance object representing the first instance in the swap
+    :param instance2: A linode_api4.instance object representing the second instance in the swap
+    """
     try:
         ipv4_address1 = instance1.ipv4[0]
         ipv4_address2 = instance2.ipv4[0]
