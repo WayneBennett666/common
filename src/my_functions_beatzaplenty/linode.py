@@ -35,33 +35,6 @@ def get_type_label(api_client, id):
     except linode_api.errors.ApiError as e:
         print(f"Error during Linode API call: {e}")
 
-def wait_for_running(api_client, linode_id, linode_name):
-    while True:
-        try:
-            linodes = api_client.linode.instances(linode_api.Instance.label == linode_name)
-        except linode_api.errors.ApiError as e:
-            print(f"Error during Linode API call: {e}")
-
-        # Parse Data
-        for current_linode in linodes:
-            if current_linode.id == linode_id:
-                linode_instance = current_linode
-
-        # Print the current status
-        current_status = linode_instance.status
-        if current_status != "running":
-            print(f"Current Linode Status is '{current_status}'. Waiting for status of 'running'", end='\r', flush=True)
-
-        # Exit the loop if the status is 'running'
-        else:
-            print("Linode is now running.")
-            break
-
-        # Wait for 1 second before the next iteration
-        time.sleep(1)
-
-    return current_status
-
 def rename_linode_instance(instance, new_name):
     """
     Rename a Linode instance.
@@ -243,7 +216,7 @@ def attach_volume(api_client, volume_label, instance):
     
     print(f"Volume '{volume_label}' attached to Linode instance {instance.id}.")
 
-def wait_for_instance_state(api_client, linode_id, linode_name, required_state='running'):
+def wait_for_instance_state(api_client, linode_id, required_state='running'):
     """
     Wait for Linode instance state
 
@@ -255,7 +228,7 @@ def wait_for_instance_state(api_client, linode_id, linode_name, required_state='
     """
     while True:
         try:
-            linodes = api_client.linode.instances(linode_api.Instance.label == linode_name)
+            linodes = api_client.linode.instances(linode_api.Instance.id == linode_id)
         except linode_api.errors.ApiError as e:
             print(f"Error during Linode API call: {e}")
 

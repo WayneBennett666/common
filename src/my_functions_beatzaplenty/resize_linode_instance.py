@@ -12,6 +12,12 @@ def main(config=None,arg_direction=None,arg_monitor=False):
     :param arg_direction: must be "--up" or "--down"
     :param arg_monitor: Bool to monitor and wait for completion.
     """
+
+    ###################   LOAD TESTING MODULE  ############################
+    # from importlib.machinery import SourceFileLoader
+    # test = SourceFileLoader("wait_for_instance_state", "/home/debian/common/src/my_functions_beatzaplenty/linode.py").load_module()
+#################################################################################
+
     ################## Linode Data Aquisition ###########################
     try:
         api_client = linode_api.LinodeClient(config.get('api_key'))
@@ -73,7 +79,7 @@ def main(config=None,arg_direction=None,arg_monitor=False):
 
     if arg_monitor:
         linode.wait_for_completion(polling_thread)
-        linode.wait_for_instance_state(api_client,linode_instance.id,linode_instance.label)
+        linode.wait_for_instance_state(api_client,linode_instance.id)
 
 if __name__ == "__main__":
        ################  Static Variables ####################

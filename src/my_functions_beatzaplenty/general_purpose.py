@@ -191,8 +191,6 @@ def remote_update(config):
     Run Updates on remote machin
     
     :param config: A configparser config section
-    :param keyfile: the keyfile to use int he connection attempt
-    :param containers: Docker containers to be updated
     '''
     if config.get("ssh_port") is None:
         ssh_port = 22
