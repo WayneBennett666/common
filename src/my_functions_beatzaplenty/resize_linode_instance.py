@@ -1,6 +1,6 @@
 import argparse, threading, configparser, os
 import linode_api4 as linode_api
-import my_functions_beatzaplenty.linode as linode
+import linode as linode
 
 def main(config=None,arg_direction=None,arg_monitor=False):
     """
