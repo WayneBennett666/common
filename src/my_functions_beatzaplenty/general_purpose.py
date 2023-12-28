@@ -186,7 +186,7 @@ def parse_tuple(input):
     '''
     return tuple(k.strip() for k in input[1:-1].split(','))
 
-def remote_update(config,keyfile,containers):
+def remote_update(config):
     '''
     Run Updates on remote machin
     
@@ -199,14 +199,14 @@ def remote_update(config,keyfile,containers):
     else:
         ssh_port =  config.get("ssh_port") 
     if config.get('update_script') is None:
-        update_script = f"-m my_functions_beatzaplenty.remote_update {containers}"
+        update_script = f"-m my_functions_beatzaplenty.remote_update {config.get('containers')}"
     else:
         update_script = config.get('update_script')
     
     print(f"****************** Updating {config.get('ssh_username')} *******************")
     ssh = create_ssh_connection(config.get('ssh_hostname'), 
                         config.get('ssh_username'),
-                        keyfile,
+                        config.get('keyfile'),
                         port=ssh_port)
     execute_ssh_command(ssh, command=f"python3 {update_script}")
 
