@@ -3,13 +3,7 @@ import linode_api4 as linode_api
 import my_functions_beatzaplenty.linode as linode
 
 def main(config=None,arg_direction=None,arg_monitor=False):
-    ################  Static Variables ####################
-
-        # Get script parent dir
-    # parent_dir = os.path.dirname(os.path.abspath(__file__))
-    # config = configparser.ConfigParser()
-    # config.read(f'{parent_dir}/resize_linode_instance_config.ini')
-    # default_config = config['default']
+ 
     ################## Linode Data Aquisition ###########################
     try:
         api_client = linode_api.LinodeClient(config.get('api_key'))
@@ -74,5 +68,11 @@ def main(config=None,arg_direction=None,arg_monitor=False):
         linode.wait_for_instance_state(api_client,linode_instance.id,linode_instance.label)
 
 if __name__ == "__main__":
-    
-    main()
+       ################  Static Variables ####################
+
+        # Get script parent dir
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    config = configparser.ConfigParser()
+    config.read(f'{parent_dir}/config.ini')
+    config = config['default']
+    main(config)
