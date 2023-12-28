@@ -2,10 +2,6 @@
 
 import general_purpose as general_purpose
 
-def usage():
-    print("Usage: {} [-p project name. default is app] and [-q quiet mode optional list compose services to recreate]".format(__file__))
-    exit(1)
-
 def main(services):
     for service in services:
         try:
