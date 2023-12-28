@@ -1,8 +1,11 @@
 import pytest, subprocess
 #     ###################### LOAD TESTING MODULE  ###########################
 from importlib.machinery import SourceFileLoader
-test = SourceFileLoader("run_command", "/home/wayne/common/src/my_functions_beatzaplenty/general_purpose.py").load_module()
+from os import getenv
+test = SourceFileLoader("run_command", f"{getenv('HOME')}/common/src/my_functions_beatzaplenty/general_purpose.py").load_module()
   #############################################################################
+
+#from my_functions_beatzaplenty.general_purpose import run_command
 
 def test_run_command_successful_execution():
     command = ["echo", "Hello, World!"]
