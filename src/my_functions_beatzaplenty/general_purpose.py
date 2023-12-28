@@ -82,6 +82,9 @@ def install_required_modules(requirements):
     
     :param requirements: The requirements.txt to use
     '''
+    if not os.path.exists(requirements):
+        raise FileNotFoundError(f"The requirements file '{requirements}' does not exist.")
+
     with open(requirements) as f:
         required_modules = f.read().splitlines()
 
@@ -94,6 +97,7 @@ def install_required_modules(requirements):
             subprocess.call(['pip', 'install', module])
         else:
             print(f"Module {name} is already installed.")
+
 
 def check_command_exists(command):
     '''
