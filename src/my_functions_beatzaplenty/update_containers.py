@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import general_purpose as general_purpose
+import my_functions_beatzaplenty.general_purpose as general_purpose
 
 def main(services):
     """
