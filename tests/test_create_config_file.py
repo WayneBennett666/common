@@ -1,13 +1,8 @@
 import os
 import configparser
 import pytest
-# #     ###################### LOAD TESTING MODULE  ###########################
-from importlib.machinery import SourceFileLoader
-from os import getenv
-test = SourceFileLoader("create_config_file", f"{getenv('HOME')}/common/src/my_functions_beatzaplenty/general_purpose.py").load_module()
-#   #############################################################################
+import my_functions_beatzaplenty.general_purpose as general_purpose
 
-# from my_functions_beatzaplenty.general_purpose import create_config_file
 
 @pytest.fixture
 def sample_config_data():
@@ -23,7 +18,7 @@ def temp_config_file(tmp_path):
 def test_create_config_file(tmp_path, sample_config_data):
     file_path = tmp_path / "test_config.ini"
     
-    test.create_config_file(sample_config_data, file_path)
+    general_purpose.create_config_file(sample_config_data, file_path)
 
     # Check if the file is created
     assert file_path.exists()
@@ -42,7 +37,7 @@ def test_create_config_file_exception_handling(tmp_path, sample_config_data, cap
     file_path.touch()
     os.chmod(file_path, 0o444)  # Make the file read-only
 
-    test.create_config_file(sample_config_data, file_path)
+    general_purpose.create_config_file(sample_config_data, file_path)
 
     # Check if an error message is printed
     captured = capsys.readouterr()

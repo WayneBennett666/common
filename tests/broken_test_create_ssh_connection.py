@@ -1,12 +1,10 @@
 import os
 from unittest.mock import Mock, patch
 import pytest
+import my_functions_beatzaplenty.general_purpose as general_purpose
 
-# Import your module and function
-from importlib.machinery import SourceFileLoader
-from os import getenv
+
 mykeyfile=f'{os.getenv("HOME")}/.ssh/id_rsa'
-test = SourceFileLoader("create_ssh_connection", f"{getenv('HOME')}/common/src/my_functions_beatzaplenty/general_purpose.py").load_module()
 
 # Mocking the 'paramiko.SSHClient' class to avoid actual SSH connections during testing
 mod_ssh_mock = Mock()
@@ -20,7 +18,7 @@ with patch('paramiko.SSHClient', mod_ssh_mock):
                     # Add this inside the test, just before the function call
                     print("Mock calls:", mod_ssh_mock.return_value.connect.mock_calls)
                     # Call the function with mocked parameters
-                    test.create_ssh_connection('localhost', 'wayne', mykeyfile, max_retries=retries, retry_interval=1, port=22)
+                    general_purpose.create_ssh_connection('localhost', 'wayne', mykeyfile, max_retries=retries, retry_interval=1, port=22)
 
                 # Debugging: Print the call count and expected calls
                 print(f"Call count: {mod_ssh_mock.return_value.connect.call_count}, Expected calls: {expected_calls}")

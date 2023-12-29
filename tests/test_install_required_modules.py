@@ -1,11 +1,8 @@
 from unittest.mock import call
 from unittest.mock import patch
 import pytest
-# #     ###################### LOAD TESTING MODULE  ###########################
-from importlib.machinery import SourceFileLoader
-from os import getenv
-test = SourceFileLoader("install_required_modules", f"{getenv('HOME')}/common/src/my_functions_beatzaplenty/general_purpose.py").load_module()
-#   #############################################################################
+import my_functions_beatzaplenty.general_purpose as general_purpose
+
 @pytest.fixture
 def requirements_file(tmp_path):
     # Create a temporary requirements.txt file for testing
@@ -18,7 +15,7 @@ def requirements_file(tmp_path):
 def test_install_required_modules_installed(capfd, requirements_file):
     # Mock find_spec to simulate that the modules are already installed
     with patch('importlib.util.find_spec', return_value=True):
-        test.install_required_modules(requirements_file)
+        general_purpose.install_required_modules(requirements_file)
 
     # Check output
     captured = capfd.readouterr()
@@ -30,7 +27,7 @@ def test_install_required_modules_not_installed(capfd, requirements_file):
     with patch('importlib.util.find_spec', return_value=None):
         # Mock subprocess.call to prevent actual installation during the test
         with patch('subprocess.call') as mock_call:
-            test.install_required_modules(requirements_file)
+            general_purpose.install_required_modules(requirements_file)
 
     # Check output
     captured = capfd.readouterr()
@@ -51,7 +48,7 @@ def test_install_required_modules_missing_file(capfd):
         # Mock subprocess.call to prevent actual installation during the test
         with patch('subprocess.call'):
             with pytest.raises(FileNotFoundError) as e:
-                test.install_required_modules("nonexistent_file.txt")
+                general_purpose.install_required_modules("nonexistent_file.txt")
     print("Actual error message:", str(e.value))
     # Check if the expected substring is present in the error message
     assert "The requirements file 'nonexistent_file.txt' does not exist." in str(e.value)
