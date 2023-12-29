@@ -20,7 +20,7 @@ def main(config=None,arg_direction=None,arg_monitor=False):
 
     ################## Linode Data Aquisition ###########################
     try:
-        api_client = linode_api.LinodeClient(os.getenv('LINODE_API_KEY'))
+        api_client = linode_api.LinodeClient(os.environ['LINODE_API_KEY'])
         linodes = api_client.linode.instances(linode_api.Instance.label == config.get('linode_name'))
     except linode_api.errors.ApiError as e:
         print(f"Error during Linode API call: {e}")
