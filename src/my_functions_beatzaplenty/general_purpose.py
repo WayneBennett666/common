@@ -1,9 +1,9 @@
 import subprocess, configparser, os, importlib, shlex, time, platform
-import paramiko as mod_ssh
+import paramiko
 
 def run_command(command):
     '''
-    Run any command and output to console
+    Run any command and output to console. Tests done
 
     :param command: A string. Command to run.
     :return: Bool for succesful execution
@@ -37,7 +37,7 @@ def run_command(command):
 
 def create_config_file(config_data, file_path):
     '''
-    Create a config file
+    Create a config file. Tests done
     param: config_data: the data to use in the file
     param: file_path: Where to put the file
     '''
@@ -78,7 +78,7 @@ def is_repo_up_to_date(path):
 
 def install_required_modules(requirements):
     '''
-    Install required python modules
+    Install required python modules. Tests done
     
     :param requirements: The requirements.txt to use
     '''
@@ -98,10 +98,10 @@ def install_required_modules(requirements):
         else:
             print(f"Module {name} is already installed.")
 
-
 def check_command_exists(command):
     '''
-    Check if a command exists
+    Check if a command exists. Tests done
+
     :param command: The command to test
     
     :return: Bool indicating if the command exists
@@ -114,7 +114,7 @@ def check_command_exists(command):
 
 def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_interval=5, port=22):
     '''
-    Create an SSH connection
+    Create an SSH connection. Tests broken
     
     :param hostname: the hostname to connect to
     :param username: the username to connect as
@@ -129,10 +129,11 @@ def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_int
     while retries < max_retries:
         try:
             # Create an SSH client
-            ssh = mod_ssh.SSHClient()
+            ssh = paramiko.SSHClient()
             # Automatically add the server's host key (this is insecure, see comments below)
-            ssh.set_missing_host_key_policy(mod_ssh.AutoAddPolicy())
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+            print(f"Connecting to {hostname} with username {username} and keyfile {keyfile}")
             # Connect to the server with the specified keyfile
             ssh.connect(hostname, username=username, key_filename=keyfile,port=port)
 
@@ -185,7 +186,7 @@ def execute_ssh_command(ssh, command):
 
 def parse_tuple(input):
     '''
-    Parse a Tuple from a CSV list
+    Parse a Tuple from a CSV list. Tests done
     
     :param input: The input to Parse
     
