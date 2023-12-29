@@ -23,3 +23,5 @@ def test_run_command_exception_handling():
         test.run_command(subprocess.CalledProcessError)
 
 # You can add more tests based on the specific scenarios you want to cover.
+if __name__ == '__main__':
+    pytest.main()

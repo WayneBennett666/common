@@ -55,4 +55,5 @@ def test_install_required_modules_missing_file(capfd):
     print("Actual error message:", str(e.value))
     # Check if the expected substring is present in the error message
     assert "The requirements file 'nonexistent_file.txt' does not exist." in str(e.value)
-  
+if __name__ == '__main__':
+    pytest.main()

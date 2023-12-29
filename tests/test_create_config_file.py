@@ -47,3 +47,6 @@ def test_create_config_file_exception_handling(tmp_path, sample_config_data, cap
     # Check if an error message is printed
     captured = capsys.readouterr()
     assert "Error:" in captured.out
+
+if __name__ == '__main__':
+    pytest.main()
