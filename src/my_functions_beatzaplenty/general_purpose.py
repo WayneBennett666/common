@@ -196,7 +196,7 @@ def parse_tuple(input):
 
 def remote_update(config):
     '''
-    Run Updates on remote machin
+    Run Updates on remote machine
     
     :param config: A configparser config section
     '''
