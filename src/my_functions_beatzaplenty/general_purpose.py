@@ -1,9 +1,10 @@
 import subprocess, configparser, os, importlib, shlex, time, platform
 import paramiko
+import update_containers
 
 def run_command(command):
     '''
-    Run any command and output to console. Tests done
+    Run any command and output to console. 
 
     :param command: A string. Command to run.
     :return: Bool for succesful execution
@@ -37,7 +38,7 @@ def run_command(command):
 
 def create_config_file(config_data, file_path):
     '''
-    Create a config file. Tests done
+    Create a config file. 
     param: config_data: the data to use in the file
     param: file_path: Where to put the file
     '''
@@ -55,7 +56,7 @@ def create_config_file(config_data, file_path):
 
 def is_repo_up_to_date(path):
     '''
-    Check if your Git Hub repo is up to date
+    Check if your Git Hub repo is up to date. 
     :param path: THe path to check
     '''
     try:
@@ -78,7 +79,7 @@ def is_repo_up_to_date(path):
 
 def install_required_modules(requirements):
     '''
-    Install required python modules. Tests done
+    Install required python modules. 
     
     :param requirements: The requirements.txt to use
     '''
@@ -100,7 +101,7 @@ def install_required_modules(requirements):
 
 def check_command_exists(command):
     '''
-    Check if a command exists. Tests done
+    Check if a command exists. 
 
     :param command: The command to test
     
@@ -114,7 +115,7 @@ def check_command_exists(command):
 
 def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_interval=5, port=22):
     '''
-    Create an SSH connection. Tests broken
+    Create an SSH connection. 
     
     :param hostname: the hostname to connect to
     :param username: the username to connect as
@@ -150,7 +151,7 @@ def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_int
 
 def execute_ssh_command(ssh, command):
     '''
-    Execute a command via SSH and output to console
+    Execute a command via SSH and output to console. 
     
     :param ssh: A paramiko.SSHClient object create using the general_purpose.create_ssh_connection function
     :param command: The command to run
@@ -186,7 +187,7 @@ def execute_ssh_command(ssh, command):
 
 def parse_tuple(input):
     '''
-    Parse a Tuple from a CSV list. Tests done
+    Parse a Tuple from a CSV list. 
     
     :param input: The input to Parse
     
@@ -196,7 +197,7 @@ def parse_tuple(input):
 
 def remote_update(config):
     '''
-    Run Updates on remote machine
+    Run Updates on remote machine. .
     
     :param config: A configparser config section
     '''
@@ -218,7 +219,7 @@ def remote_update(config):
 
 def run_updates(containers):
     '''
-    Run updates on machine. Runs all apt, flatpak and spice updates and updates given containers
+    Run updates on machine. Runs all apt, flatpak and spice updates and updates given containers. 
     
     :param containers: the containers to update
     '''
@@ -239,23 +240,3 @@ def run_updates(containers):
             update_containers(containers)
     except Exception as e:
         print("Error: {}".format(e))
-
-def update_containers(services):
-    '''
-    Updates Docker Containers
-    
-    :param services: The Docker services to update
-    '''
-    for service in services:
-        try:
-            path = f"/docker/{service}/docker-compose.yml"
-            pull_command = ["docker-compose", "--file", path, "pull"]
-            up_command = ["docker-compose", "--file", path, "up", "-d"]
-            if not run_command(pull_command):
-                continue
-            
-            if not run_command(up_command):
-                continue
-                
-        except Exception as e:
-            print("Error: {}".format(e))
