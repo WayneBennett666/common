@@ -25,7 +25,7 @@ def mock_check_command_exists(monkeypatch):
 @pytest.fixture
 def mock_update_containers(monkeypatch):
     mock = MagicMock()
-    monkeypatch.setattr('my_functions_beatzaplenty.general_purpose.update_containers', mock)
+    monkeypatch.setattr('my_functions_beatzaplenty.update_containers.main', mock)
     return mock
 
 def test_run_updates(mock_platform, mock_run_command, mock_check_command_exists, mock_update_containers, monkeypatch):

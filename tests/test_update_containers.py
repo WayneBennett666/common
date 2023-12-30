@@ -15,7 +15,7 @@ def test_update_containers_success(mock_run_command):
     services = ["esphome", "webdav"]
 
     # Act
-    update_containers(services)
+    update_containers.main(services)
 
     # Assert
     assert mock_run_command.call_count == 4
@@ -30,7 +30,7 @@ def test_update_containers_failure(mock_run_command):
     mock_run_command.side_effect = [True, False, True, False]
 
     # Act
-    update_containers(services)
+    update_containers.main(services)
 
     # Assert
     assert mock_run_command.call_count == 4
