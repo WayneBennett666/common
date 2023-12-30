@@ -1,6 +1,6 @@
 import subprocess, configparser, os, importlib, shlex, time, platform
 import paramiko
-import update_containers
+import my_functions_beatzaplenty.update_containers as update_containers
 
 def run_command(command):
     '''
