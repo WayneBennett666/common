@@ -237,6 +237,7 @@ def run_updates(containers):
         for cmd in update_commands:
             run_command(cmd)
         if check_command_exists("docker"):
-            update_containers(containers)
+            update_containers.main(containers)
     except Exception as e:
         print("Error: {}".format(e))
+#run_updates(['esphome', 'webdav'])
