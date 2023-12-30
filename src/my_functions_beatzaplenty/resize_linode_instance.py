@@ -13,11 +13,6 @@ def main(config=None,arg_direction=None,arg_monitor=False):
     :param arg_monitor: Bool to monitor and wait for completion.
     """
 
-    ###################   LOAD TESTING MODULE  ############################
-    # from importlib.machinery import SourceFileLoader
-    # test = SourceFileLoader("wait_for_instance_state", "/home/debian/common/src/my_functions_beatzaplenty/linode.py").load_module()
-#################################################################################
-
     ################## Linode Data Aquisition ###########################
     try:
         api_client = linode_api.LinodeClient(os.environ['LINODE_API_KEY'])

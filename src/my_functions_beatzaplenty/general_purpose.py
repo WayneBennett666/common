@@ -240,4 +240,3 @@ def run_updates(containers):
             update_containers.main(containers)
     except Exception as e:
         print("Error: {}".format(e))
-#run_updates(['esphome', 'webdav'])
