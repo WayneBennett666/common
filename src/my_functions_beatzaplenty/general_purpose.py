@@ -119,7 +119,7 @@ def create_ssh_connection(hostname, username, keyfile, max_retries=10, retry_int
     
     :param hostname: the hostname to connect to
     :param username: the username to connect as
-    :param keyfile: the keyfile to use int he conneciton attempt
+    :param keyfile: the keyfile to use in the conneciton attempt. Auto discovers any keys in $HOME/.ssh
     :param max_retries: default is 10
     :param retry_interval: Specified in seconds. Default is 5 seconds.
     :param port: Port to connect to. Default is 22
